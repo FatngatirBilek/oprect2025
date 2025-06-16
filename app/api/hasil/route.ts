@@ -1,11 +1,11 @@
 import connect from "@/lib/databaseconnect";
-import Suara from "@/models/suara";
+import Hasil from "@/models/hasil";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
-  const { nama, nomor, count } = await request.json();
+  const { nama, terima } = await request.json();
   await connect();
-  await Suara.create({ nama, nomor, count });
+  await Hasil.create({ nama, terima });
   try {
     return NextResponse.json({ message: "berhasil dibuat" }, { status: 201 });
   } catch (error) {
@@ -16,14 +16,14 @@ export async function POST(request: NextRequest) {
 
 export async function GET() {
   await connect();
-  const suara = await Suara.find();
-  return NextResponse.json(suara);
+  const hasil = await Hasil.find();
+  return NextResponse.json(hasil);
 }
 
 export async function DELETE(request: NextRequest) {
   const id = request.nextUrl.searchParams.get("id");
   await connect();
-  await Suara.findByIdAndDelete(id);
+  await Hasil.findByIdAndDelete(id);
   try {
     return NextResponse.json({ message: "Berhasil dihapus" }, { status: 200 });
   } catch (error) {
