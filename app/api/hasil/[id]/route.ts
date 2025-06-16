@@ -9,11 +9,15 @@ interface Params {
 export async function PUT(request: NextRequest, context: { params: Params }) {
   try {
     const { id } = context.params;
-    const { newNama: nama, newTerima: terima } = await request.json();
+    const {
+      newNama: nama,
+      newTerima: terima,
+      newImageURL: imageURL,
+    } = await request.json();
     await connect();
     const updated = await Hasil.findByIdAndUpdate(
       id,
-      { nama, terima },
+      { nama, terima, imageURL },
       { new: true },
     );
     if (!updated) {

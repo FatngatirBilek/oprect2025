@@ -7,7 +7,7 @@ interface Hasil {
   _id: string;
   nama: string;
   terima: boolean;
-  // timestamps if you need them
+  imageURL: string;
 }
 
 export default function LihatHasilPage() {
@@ -34,7 +34,6 @@ export default function LihatHasilPage() {
         setLoading(false);
       }
     }
-
     if (id) fetchHasil();
   }, [id]);
 
@@ -49,13 +48,15 @@ export default function LihatHasilPage() {
         <strong>Nama:</strong> {hasil.nama}
       </p>
       <p>
-        <strong>Status:</strong>{" "}
-        {hasil.terima ? (
-          <span style={{ color: "green", fontWeight: "bold" }}>Diterima</span>
-        ) : (
-          <span style={{ color: "red", fontWeight: "bold" }}>Ditolak</span>
-        )}
+        <strong>Status:</strong> {hasil.terima ? "Diterima" : "Ditolak"}
       </p>
+      <img
+        src={hasil.imageURL}
+        alt={hasil.nama}
+        width={200}
+        height={200}
+        style={{ margin: "1rem auto", borderRadius: 12, objectFit: "cover" }}
+      />
     </div>
   );
 }
