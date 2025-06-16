@@ -43,7 +43,7 @@ export default function LihatHasilPage() {
 
   return (
     <div style={{ maxWidth: 400, margin: "2rem auto", textAlign: "center" }}>
-      <h2>Hasil Suara</h2>
+      <h2>Hasil Seleksi</h2>
       <p>
         <strong>Nama:</strong> {hasil.nama}
       </p>
