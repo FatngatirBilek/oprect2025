@@ -14,30 +14,42 @@ import {
 } from "@/components/ui/animated-modals";
 import Envelope from "@/components/Envelope";
 
-export default function Modals() {
+export default function LihatHasilModal() {
   const { id } = useParams<{ id: string }>();
 
   const [hasil, setHasil] = useState<null | { nama: string; terima: boolean }>(
     null,
   );
+  const [notFound, setNotFound] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let mounted = true;
     async function fetchNama() {
+      setLoading(true);
+      setNotFound(false);
       try {
         const res = await fetch(`/api/hasil/${id}`);
         if (!res.ok) {
+          setNotFound(true);
+          setHasil(null);
+        } else {
           const data = await res.json();
-          throw new Error(data.message || "Gagal memuat data");
+          if (mounted && data.hasil) {
+            setHasil({
+              nama: data.hasil?.nama ?? "",
+              terima: data.hasil?.terima,
+            });
+          } else {
+            setNotFound(true);
+            setHasil(null);
+          }
         }
-        const data = await res.json();
-        if (mounted)
-          setHasil({
-            nama: data.hasil?.nama ?? "",
-            terima: data.hasil?.terima,
-          });
       } catch (err) {
-        if (mounted) setHasil(null);
+        setNotFound(true);
+        setHasil(null);
+      } finally {
+        setLoading(false);
       }
     }
     if (id) fetchNama();
@@ -95,6 +107,28 @@ export default function Modals() {
     );
   };
 
+  if (loading) {
+    return (
+      <div
+        className="w-full flex justify-center items-center"
+        style={{ minHeight: "40vh" }}
+      >
+        <span>Loading...</span>
+      </div>
+    );
+  }
+
+  if (notFound || !hasil) {
+    return (
+      <div
+        className="w-full flex justify-center items-center"
+        style={{ minHeight: "40vh" }}
+      >
+        <span className="text-lg text-red-600 font-bold">Data not found</span>
+      </div>
+    );
+  }
+
   return (
     <div className="w-[100%] items-center justify-center flex">
       <ModalProvider>
@@ -108,7 +142,6 @@ export default function Modals() {
             <ModalContentWithCloseButton />
             <ModalFooter className="gap-4 flex items-center">
               <span className="text-left">Made with ❤️ by Fathir</span>
-              {/* This is the Link to the image page (opens in new tab) */}
               <Link
                 href={`/Sertif/${id}`}
                 target="_blank"
