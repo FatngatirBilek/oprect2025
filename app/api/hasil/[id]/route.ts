@@ -1,30 +1,41 @@
-import { NextRequest, NextResponse } from "next/server";
 import connect from "@/lib/databaseconnect";
 import Hasil from "@/models/hasil";
+import { NextRequest, NextResponse } from "next/server";
 
-interface Params {
-  id: string;
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { id: string } },
+) {
+  try {
+    await connect();
+    const hasil = await Hasil.findById(params.id);
+    if (!hasil) {
+      return NextResponse.json({ message: "Hasil not found" }, { status: 404 });
+    }
+    return NextResponse.json({ hasil }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ message: "Server error" }, { status: 500 });
+  }
 }
 
-export async function PUT(request: NextRequest, context: { params: Params }) {
+// PUT update hasil
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: { id: string } },
+) {
   try {
-    const { id } = context.params;
-    const {
-      newNama: nama,
-      newTerima: terima,
-      newImageURL: imageURL,
-    } = await request.json();
+    const { newNama, newTerima, newImageURL } = await request.json();
     await connect();
     const updated = await Hasil.findByIdAndUpdate(
-      id,
-      { nama, terima, imageURL },
+      params.id,
+      { nama: newNama, terima: newTerima, imageURL: newImageURL },
       { new: true },
     );
     if (!updated) {
       return NextResponse.json({ message: "Hasil not found" }, { status: 404 });
     }
     return NextResponse.json(
-      { message: "Suara updated successfully", hasil: updated },
+      { message: "Hasil updated successfully", hasil: updated },
       { status: 200 },
     );
   } catch (error) {
@@ -32,16 +43,16 @@ export async function PUT(request: NextRequest, context: { params: Params }) {
   }
 }
 
-export async function GET(_: NextRequest, context: { params: Params }) {
+// DELETE hasil
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } },
+) {
   try {
-    const { id } = context.params;
     await connect();
-    const hasil = await Hasil.findOne({ _id: id });
-    if (!hasil) {
-      return NextResponse.json({ message: "Hasil not found" }, { status: 404 });
-    }
-    return NextResponse.json({ hasil }, { status: 200 });
+    await Hasil.findByIdAndDelete(params.id);
+    return NextResponse.json({ message: "Berhasil dihapus" }, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ message: "Server error" }, { status: 500 });
+    return NextResponse.json({ message: "Gagal dihapus" }, { status: 500 });
   }
 }

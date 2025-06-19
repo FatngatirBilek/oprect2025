@@ -17,17 +17,5 @@ export async function POST(request: NextRequest) {
 export async function GET() {
   await connect();
   const hasil = await Hasil.find();
-  return NextResponse.json(hasil);
-}
-
-export async function DELETE(request: NextRequest) {
-  const id = request.nextUrl.searchParams.get("id");
-  await connect();
-  await Hasil.findByIdAndDelete(id);
-  try {
-    return NextResponse.json({ message: "Berhasil dihapus" }, { status: 200 });
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json({ message: "Gagal dihapus" }, { status: 500 });
-  }
+  return NextResponse.json({ hasil });
 }
