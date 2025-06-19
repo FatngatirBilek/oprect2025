@@ -11,7 +11,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { toast } from "sonner";
+import { toast as sonnerToast } from "sonner";
+import { FaClipboard, FaExternalLinkAlt } from "react-icons/fa";
+
+// Material UI Snackbar imports
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 interface Hasil {
   _id: string;
@@ -27,6 +32,10 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(false);
   const [imgUploading, setImgUploading] = useState(false);
   const fileInput = useRef<HTMLInputElement>(null);
+
+  // Material UI Snackbar state
+  const [copiedOpen, setCopiedOpen] = useState(false);
+  const [updatedOpen, setUpdatedOpen] = useState(false);
 
   useEffect(() => {
     fetchList();
@@ -59,7 +68,8 @@ export default function DashboardPage() {
             newImageURL: form.imageURL,
           }),
         });
-        toast.success("Data berhasil diupdate");
+        sonnerToast.success("Data berhasil diupdate");
+        setUpdatedOpen(true); // Show update notification
       } else {
         await fetch("/api/hasil", {
           method: "POST",
@@ -70,12 +80,12 @@ export default function DashboardPage() {
             imageURL: form.imageURL,
           }),
         });
-        toast.success("Data berhasil ditambah");
+        sonnerToast.success("Data berhasil ditambah");
       }
       await fetchList();
       resetForm();
     } catch {
-      toast.error("Gagal menyimpan data");
+      sonnerToast.error("Gagal menyimpan data");
     }
     setLoading(false);
   }
@@ -85,10 +95,10 @@ export default function DashboardPage() {
     setLoading(true);
     try {
       await fetch(`/api/hasil/${_id}`, { method: "DELETE" });
-      toast.success("Data berhasil dihapus");
+      sonnerToast.success("Data berhasil dihapus");
       await fetchList();
     } catch {
-      toast.error("Gagal menghapus data");
+      sonnerToast.error("Gagal menghapus data");
     }
     setLoading(false);
   }
@@ -120,9 +130,9 @@ export default function DashboardPage() {
       });
       const data = await res.json();
       if (data.url) setForm((f) => ({ ...f, imageURL: data.url }));
-      else toast.error("Tidak bisa upload gambar");
+      else sonnerToast.error("Tidak bisa upload gambar");
     } catch {
-      toast.error("Tidak bisa upload gambar");
+      sonnerToast.error("Tidak bisa upload gambar");
     }
     setImgUploading(false);
   }
@@ -144,139 +154,205 @@ export default function DashboardPage() {
     setLoading(false);
   }
 
+  function handleCopyLink(x: Hasil) {
+    const url = `${window.location.origin}/lihatHasil/${x._id}`;
+    navigator.clipboard.writeText(url);
+    setCopiedOpen(true); // Show Material UI notification
+    // Optionally keep sonner notification too
+    // sonnerToast.success("Link copied!");
+  }
+
+  function handleRedirect(x: Hasil) {
+    window.open(`/lihatHasil/${x._id}`, "_blank");
+  }
+
   return (
-    <div className="min-h-screen flex items-start justify-center py-12 bg-gradient-to-br from-pink-100 to-pink-200">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl p-8 border border-pink-100">
-        <h2 className="text-4xl font-bold mb-8 text-center text-pink-700 drop-shadow">
-          Dashboard Hasil
-        </h2>
-        <form
-          onSubmit={handleSubmit}
-          className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 bg-pink-50 rounded-xl p-6 shadow transition"
-        >
-          {/* Nama Input */}
-          <Input
-            required
-            placeholder="Nama"
-            value={form.nama ?? ""}
-            onChange={(e) => setForm((f) => ({ ...f, nama: e.target.value }))}
-            className="w-full bg-white border-2 border-pink-400 text-pink-900 font-semibold placeholder-pink-300 focus:ring-2 focus:ring-pink-400 focus:border-pink-500"
-          />
-
-          {/* Terima Checkbox */}
-          <div className="flex items-center space-x-2">
-            <Checkbox
-              checked={!!form.terima}
-              onCheckedChange={(checked) =>
-                setForm((f) => ({ ...f, terima: checked as boolean }))
-              }
-              id="terima"
-              className="border-2 border-pink-400 focus:ring-2 focus:ring-pink-400"
+    <>
+      <div className="min-h-screen flex items-start justify-center py-12 bg-gradient-to-br from-pink-100 to-pink-200">
+        <div className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl p-8 border border-pink-100">
+          <h2 className="text-4xl font-bold mb-8 text-center text-pink-700 drop-shadow">
+            Dashboard Hasil
+          </h2>
+          <form
+            onSubmit={handleSubmit}
+            className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 bg-pink-50 rounded-xl p-6 shadow transition"
+          >
+            {/* Nama Input */}
+            <Input
+              required
+              placeholder="Nama"
+              value={form.nama ?? ""}
+              onChange={(e) => setForm((f) => ({ ...f, nama: e.target.value }))}
+              className="w-full bg-white border-2 border-pink-400 text-pink-900 font-semibold placeholder-pink-300 focus:ring-2 focus:ring-pink-400 focus:border-pink-500"
             />
-            <label htmlFor="terima" className="text-pink-600 font-semibold">
-              Terima
-            </label>
-          </div>
 
-          {/* File Input */}
-          <Input
-            type="file"
-            accept="image/*"
-            ref={fileInput}
-            onChange={handleImageUpload}
-            className="w-full bg-white border-2 border-pink-400 text-pink-900 font-medium focus:ring-2 focus:ring-pink-400 focus:border-pink-500"
-          />
+            {/* Terima Checkbox */}
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                checked={!!form.terima}
+                onCheckedChange={(checked) =>
+                  setForm((f) => ({ ...f, terima: checked as boolean }))
+                }
+                id="terima"
+                className="border-2 border-pink-400 focus:ring-2 focus:ring-pink-400"
+              />
+              <label htmlFor="terima" className="text-pink-600 font-semibold">
+                Terima
+              </label>
+            </div>
 
-          <div className="col-span-1 md:col-span-3 flex gap-2 mt-2">
-            <Button
-              type="submit"
-              disabled={loading || imgUploading}
-              className="w-32"
-            >
-              {editId ? "Update" : "Tambah"}
-            </Button>
-            {editId && (
+            {/* File Input */}
+            <Input
+              type="file"
+              accept="image/*"
+              ref={fileInput}
+              onChange={handleImageUpload}
+              className="w-full bg-white border-2 border-pink-400 text-pink-900 font-medium focus:ring-2 focus:ring-pink-400 focus:border-pink-500"
+            />
+
+            <div className="col-span-1 md:col-span-3 flex gap-2 mt-2">
               <Button
-                type="button"
-                variant="outline"
-                onClick={resetForm}
-                className="w-24"
+                type="submit"
+                disabled={loading || imgUploading}
+                className="w-32"
               >
-                Batal
+                {editId ? "Update" : "Tambah"}
               </Button>
-            )}
-            {(loading || imgUploading) && (
-              <div className="flex items-center text-sm text-pink-500 pl-4">
-                Loading...
-              </div>
-            )}
-          </div>
-        </form>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="text-pink-700">Nama</TableHead>
-              <TableHead className="text-pink-700">Terima</TableHead>
-              <TableHead className="text-pink-700">Image</TableHead>
-              <TableHead className="text-pink-700">Action</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {list.map((x) => (
-              <TableRow key={x._id} className="hover:bg-pink-50 transition">
-                <TableCell className="py-4 text-base font-semibold">
-                  {x.nama}
-                </TableCell>
-                <TableCell>
-                  <Checkbox
-                    checked={x.terima}
-                    onCheckedChange={(checked) =>
-                      toggleTerima(x._id, checked as boolean)
-                    }
-                    disabled={loading}
-                    className="border-2 border-pink-400"
-                  />
-                </TableCell>
-                <TableCell>
-                  {x.imageURL ? (
-                    <img
-                      src={x.imageURL}
-                      alt=""
-                      className="w-16 h-16 rounded-lg object-cover border shadow"
-                    />
-                  ) : (
-                    <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center text-gray-400">
-                      No Image
-                    </div>
-                  )}
-                </TableCell>
-                <TableCell>
-                  <div className="flex gap-2">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => startEdit(x._id)}
-                      disabled={loading}
-                      className="rounded-lg border-pink-300 text-pink-700 hover:bg-pink-100"
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="destructive"
-                      onClick={() => handleDelete(x._id)}
-                      disabled={loading}
-                      className="rounded-lg"
-                    >
-                      Delete
-                    </Button>
-                  </div>
-                </TableCell>
+              {editId && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={resetForm}
+                  className="w-24"
+                >
+                  Batal
+                </Button>
+              )}
+              {(loading || imgUploading) && (
+                <div className="flex items-center text-sm text-pink-500 pl-4">
+                  Loading...
+                </div>
+              )}
+            </div>
+          </form>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="text-pink-700">Nama</TableHead>
+                <TableHead className="text-pink-700">Terima</TableHead>
+                <TableHead className="text-pink-700">Image</TableHead>
+                <TableHead className="text-pink-700">Action</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {list.map((x) => (
+                <TableRow key={x._id} className="hover:bg-pink-50 transition">
+                  <TableCell className="py-4 text-base font-semibold">
+                    {x.nama}
+                  </TableCell>
+                  <TableCell>
+                    <Checkbox
+                      checked={x.terima}
+                      onCheckedChange={(checked) =>
+                        toggleTerima(x._id, checked as boolean)
+                      }
+                      disabled={loading}
+                      className="border-2 border-pink-400"
+                    />
+                  </TableCell>
+                  <TableCell>
+                    {x.imageURL ? (
+                      <img
+                        src={x.imageURL}
+                        alt=""
+                        className="w-16 h-16 rounded-lg object-cover border shadow"
+                      />
+                    ) : (
+                      <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center text-gray-400">
+                        No Image
+                      </div>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex gap-2">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => startEdit(x._id)}
+                        disabled={loading}
+                        className="rounded-lg border-pink-300 text-pink-700 hover:bg-pink-100"
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="destructive"
+                        onClick={() => handleDelete(x._id)}
+                        disabled={loading}
+                        className="rounded-lg"
+                      >
+                        Delete
+                      </Button>
+                      <Button
+                        size="icon"
+                        type="button"
+                        className="rounded-lg border border-pink-300 bg-pink-100 text-pink-700 hover:bg-pink-200"
+                        title="Copy Link"
+                        onClick={() => handleCopyLink(x)}
+                      >
+                        <FaClipboard />
+                      </Button>
+                      <Button
+                        size="icon"
+                        type="button"
+                        className="rounded-lg border border-pink-300 bg-pink-100 text-pink-700 hover:bg-pink-200"
+                        title="Lihat Detail"
+                        onClick={() => handleRedirect(x)}
+                      >
+                        <FaExternalLinkAlt />
+                      </Button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       </div>
-    </div>
+      {/* Material UI Snackbar for copy link */}
+      <Snackbar
+        open={copiedOpen}
+        autoHideDuration={2000}
+        onClose={() => setCopiedOpen(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          severity="success"
+          sx={{ width: "100%" }}
+          onClose={() => setCopiedOpen(false)}
+        >
+          Link copied!
+        </MuiAlert>
+      </Snackbar>
+      {/* Material UI Snackbar for update */}
+      <Snackbar
+        open={updatedOpen}
+        autoHideDuration={2000}
+        onClose={() => setUpdatedOpen(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          severity="info"
+          sx={{ width: "100%" }}
+          onClose={() => setUpdatedOpen(false)}
+        >
+          Data berhasil diupdate!
+        </MuiAlert>
+      </Snackbar>
+    </>
   );
 }
