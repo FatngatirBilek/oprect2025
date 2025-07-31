@@ -4,20 +4,19 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
-  try {
-    await connect();
-    const hasil = await Hasil.findById(params.id);
-    if (!hasil) {
-      return NextResponse.json({ message: "Hasil not found" }, { status: 404 });
-    }
-    return NextResponse.json({ hasil }, { status: 200 });
-  } catch (error) {
-    return NextResponse.json({ message: "Server error" }, { status: 500 });
+  const { id } = await params;
+  await connect();
+  const hasil = await Hasil.findOne({ _id: id });
+  if (!hasil) {
+    return NextResponse.json(
+      { message: "Hasil Tidak ditemukan" },
+      { status: 404 },
+    );
   }
+  return NextResponse.json({ hasil }, { status: 200 });
 }
-
 // PUT update hasil
 export async function PUT(
   request: NextRequest,
