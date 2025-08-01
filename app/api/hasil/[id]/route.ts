@@ -23,18 +23,35 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  const { id } = await params;
-  const {
-    newNama: nama,
-    newTerima: terima,
-    newImageURL: imageURL,
-  } = await request.json();
-  await connect();
-  await Hasil.findByIdAndUpdate(id, { nama, terima, imageURL });
-  return NextResponse.json(
-    { message: "Hasil updated successfully" },
-    { status: 200 },
-  );
+  try {
+    const { id } = await params;
+    const {
+      newNama: nama,
+      newTerima: terima,
+      newImageURL: imageURL,
+    } = await request.json();
+    await connect();
+    const updated = await Hasil.findByIdAndUpdate(id, {
+      nama,
+      terima,
+      imageURL,
+    });
+    if (!updated) {
+      return NextResponse.json(
+        { message: "Hasil Tidak ditemukan untuk diupdate" },
+        { status: 404 },
+      );
+    }
+    return NextResponse.json(
+      { message: "Hasil updated successfully" },
+      { status: 200 },
+    );
+  } catch (error: any) {
+    return NextResponse.json(
+      { message: "Gagal update hasil", error: error?.message || error },
+      { status: 500 },
+    );
+  }
 }
 
 // DELETE /api/hasil/[id]
