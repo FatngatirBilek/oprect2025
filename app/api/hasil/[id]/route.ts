@@ -2,14 +2,13 @@ import connect from "@/lib/databaseconnect";
 import Hasil from "@/models/hasil";
 import { NextRequest, NextResponse } from "next/server";
 
-// GET /api/hasil/[id]
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
-  const { id } = params;
+  const { id } = await params;
   await connect();
-  const hasil = await Hasil.findById(id);
+  const hasil = await Hasil.findOne({ _id: id });
   if (!hasil) {
     return NextResponse.json(
       { message: "Hasil Tidak ditemukan" },
@@ -18,8 +17,7 @@ export async function GET(
   }
   return NextResponse.json({ hasil }, { status: 200 });
 }
-
-// PUT /api/hasil/[id]
+// PUT update hasil
 export async function PUT(
   request: NextRequest,
   { params }: { params: { id: string } },
@@ -44,7 +42,7 @@ export async function PUT(
   }
 }
 
-// DELETE /api/hasil/[id]
+// DELETE hasil
 export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } },
