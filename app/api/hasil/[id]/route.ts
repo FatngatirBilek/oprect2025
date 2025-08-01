@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 // GET /api/hasil/[id]
 export async function GET(
-  request: NextRequest,
+  _: NextRequest,
   { params }: { params: { id: string } },
 ) {
   const { id } = params;
@@ -56,7 +56,7 @@ export async function PUT(
 
 // DELETE /api/hasil/[id]
 export async function DELETE(
-  request: NextRequest,
+  _: NextRequest,
   { params }: { params: { id: string } },
 ) {
   try {
