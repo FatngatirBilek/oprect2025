@@ -5,16 +5,13 @@ import { NextRequest, NextResponse } from "next/server";
 // GET /api/hasil/[id]
 export async function GET(
   _: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
-  const { id } = params;
+  const { id } = await params;
   await connect();
-  const hasil = await Hasil.findById(id);
+  const hasil = await Hasil.findOne({ _id: id });
   if (!hasil) {
-    return NextResponse.json(
-      { message: "Hasil Tidak ditemukan" },
-      { status: 404 },
-    );
+    return NextResponse.json({ message: "Hasil not found" }, { status: 404 });
   }
   return NextResponse.json({ hasil }, { status: 200 });
 }
