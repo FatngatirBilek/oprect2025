@@ -13,6 +13,7 @@ import {
   ModalProvider,
 } from "@/components/ui/animated-modals";
 import Envelope from "@/components/Envelope";
+import "@/styles/notepad-style.css";
 
 export default function LihatHasilModal() {
   const { id } = useParams<{ id: string }>();
@@ -64,42 +65,71 @@ export default function LihatHasilModal() {
     const { setOpen } = useModal();
     return (
       <ModalContent>
-        <div className="notepad relative">
-          <div className="top relative">
+        <div className="notepad">
+          {/* HEADER */}
+          <div className="notepad-header">
+            <span className="badge-confidential">CONFIDENTIAL</span>
+            <span
+              style={{ display: "inline-block", marginLeft: 6, marginRight: 7 }}
+            >
+              {/* Magnifier SVG */}
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 22 22"
+                style={{ verticalAlign: "middle" }}
+              >
+                <circle
+                  cx="10"
+                  cy="10"
+                  r="8"
+                  stroke="#a4251d"
+                  strokeWidth="2"
+                  fill="none"
+                />
+                <rect
+                  x="15"
+                  y="15"
+                  width="5"
+                  height="2"
+                  rx="1"
+                  fill="#b9925b"
+                  transform="rotate(45 15 15)"
+                />
+              </svg>
+            </span>
+            <span className="case-title">
+              Case File:{" "}
+              <span style={{ color: "#a4251d", marginLeft: "3px" }}>
+                <FlipWords className="capitalize" words={words} />
+              </span>
+            </span>
             <button
-              className="absolute top-2 right-2 text-white z-10 close-button"
+              className="close-button"
               onClick={() => setOpen(false)}
+              aria-label="Tutup"
             >
               &times;
             </button>
           </div>
+          {/* PAPER */}
           <div className="paper">
-            <h4 className="text-lg md:text-2xl text-neutral-600 dark:text-neutral-100 font-bold text-center mb-8">
-              Selamat
-              <FlipWords className="capitalize" words={words} />
-              ❤️
-            </h4>
-            <div className="pb-10 flex flex-wrap gap-x-5 gap-y-7 items-start justify-start max-w-full">
-              <span className="font-bold mx-5">Kamis, 27 Maret 2025</span>
-              <div className="flex items-center justify-center">
-                <span className="mx-10">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Maecenas egestas mollis urna quis bibendum. Nunc porta
-                  consequat arcu eu scelerisque. Ut eleifend ipsum ut neque
-                  malesuada lobortis. Nulla semper, dolor vitae elementum
-                  posuere, nunc neque dictum elit, id iaculis libero tellus sed
-                  quam. Vestibulum elementum condimentum felis, id fringilla
-                  metus. Fusce lobortis interdum nulla, ut dictum magna pulvinar
-                  non. Sed viverra id leo eu viverra. Integer velit dui,
-                  facilisis faucibus tellus quis, feugiat bibendum felis. In
-                  euismod vestibulum mattis. Integer sed augue pharetra, laoreet
-                  odio vel, facilisis leo. Aenean sit amet interdum justo.
-                  Integer eget neque a tortor dapibus scelerisque a ut sem.
-                  Etiam consectetur nunc vel nunc convallis volutpat. Aliquam id
-                  lectus non nunc tempor tempus sed vel mi. Vivamus varius dui
-                  in mi convallis ultricies. Praesent dictum leo magna.{" "}
-                </span>
-              </div>
+            <span className="paper-date">Kamis, 27 Maret 2025</span>
+            <div>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
+              egestas mollis urna quis bibendum. Nunc porta consequat arcu eu
+              scelerisque. Ut eleifend ipsum ut neque malesuada lobortis. Nulla
+              semper, dolor vitae elementum posuere, nunc neque dictum elit, id
+              iaculis libero tellus sed quam. Vestibulum elementum condimentum
+              felis, id fringilla metus. Fusce lobortis interdum nulla, ut
+              dictum magna pulvinar non. Sed viverra id leo eu viverra. Integer
+              velit dui, facilisis faucibus tellus quis, feugiat bibendum felis.
+              In euismod vestibulum mattis. Integer sed augue pharetra, laoreet
+              odio vel, facilisis leo. Aenean sit amet interdum justo. Integer
+              eget neque a tortor dapibus scelerisque a ut sem. Etiam
+              consectetur nunc vel nunc convallis volutpat. Aliquam id lectus
+              non nunc tempor tempus sed vel mi. Vivamus varius dui in mi
+              convallis ultricies. Praesent dictum leo magna.
             </div>
           </div>
         </div>
@@ -130,7 +160,7 @@ export default function LihatHasilModal() {
   }
 
   return (
-    <div className="w-[100%] items-center justify-center flex">
+    <div className="w-full min-h-screen flex items-center justify-center">
       <ModalProvider>
         <Modal>
           <ModalTrigger>
@@ -140,8 +170,14 @@ export default function LihatHasilModal() {
           </ModalTrigger>
           <ModalBody>
             <ModalContentWithCloseButton />
-            <ModalFooter className="gap-4 flex items-center">
-              <span className="text-left">Made with ❤️ by Fathir</span>
+            <ModalFooter>
+              <span>
+                Made with{" "}
+                <span role="img" aria-label="detective">
+                  🕵️‍♂️
+                </span>{" "}
+                by Fathir
+              </span>
               <Link
                 href={`/Sertif/${id}`}
                 target="_blank"

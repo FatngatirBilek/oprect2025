@@ -1,17 +1,17 @@
-/* Container styles */
 .container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Take up the full available height */
-    /* background-color: #fae1dd; */
+    height: 100vh;
+    width: 100vw;
+    /* background-color: #c8a97e; */
     position: relative;
+    margin: 0;
+    padding: 0;
 }
 
-/* Valentines card styles */
 .valentines {
     position: relative;
-    top: 50px;
     cursor: pointer;
     animation: up 3s linear infinite;
 }
@@ -20,11 +20,12 @@
     position: relative;
     width: 300px;
     height: 200px;
-    background-color: #f08080;
+    background-color: #c8a97e;
+    box-shadow: 0 4px 16px rgba(80, 60, 30, 0.15);
 }
 
 .envelope:before {
-    background-color: #f08080;
+    background-color: #c8a97e;
     content: "";
     position: absolute;
     width: 212px;
@@ -37,13 +38,13 @@
 
 .card {
     position: absolute;
-    background-color: #eae2b7;
+    background-color: #ffffff;
     width: 270px;
     height: 170px;
     top: 5px;
     left: 15px;
-    /* box-shadow: -5px -5px 100px rgba(0, 0, 0, 0.4); */
     transition: top 0.6s;
+    box-shadow: 0 2px 8px rgba(80, 60, 30, 0.11);
 }
 
 .cardHovered {
@@ -53,8 +54,7 @@
 .card:before {
     content: "";
     position: absolute;
-    border: 3px solid #003049;
-    border-style: dotted;
+    border: 3px dotted #3e2723;
     width: 240px;
     height: 140px;
     left: 12px;
@@ -69,44 +69,41 @@
     line-height: 25px;
     top: 19px;
     left: 54px;
-    color: #003049;
+    color: #a4251d;
 }
 
-.heart {
-    background-color: #d62828;
-    display: inline-block;
-    height: 30px;
-    margin: 0 10px;
-    position: relative;
-    top: 110px;
-    left: 105px;
-    transform: rotate(-45deg);
-    width: 30px;
-}
-
-.heart:before,
-.heart:after {
-    content: "";
-    background-color: #d62828;
-    border-radius: 50%;
-    height: 30px;
+.magnifier {
     position: absolute;
+    top: 110px;
+    left: 110px;
+    width: 40px;
+    height: 40px;
+    background: none;
+}
+.magnifier-circle {
     width: 30px;
-}
-
-.heart:before {
-    top: -15px;
+    height: 30px;
+    border: 4px solid #7c4f20;
+    border-radius: 50%;
+    position: absolute;
     left: 0;
-}
-
-.heart:after {
-    left: 15px;
     top: 0;
+    background: #f5ecd7;
+}
+.magnifier-handle {
+    width: 18px;
+    height: 6px;
+    background: #a4251d;
+    position: absolute;
+    left: 22px;
+    top: 26px;
+    border-radius: 3px;
+    transform: rotate(45deg);
 }
 
 .front {
     position: absolute;
-    border-right: 180px solid #f4978e;
+    border-right: 180px solid #9a6d38;
     border-top: 95px solid transparent;
     border-bottom: 100px solid transparent;
     left: 120px;
@@ -119,25 +116,13 @@
 .front:before {
     position: absolute;
     content: "";
-    border-left: 300px solid #f8ad9d;
+    border-left: 300px solid #b9925b;
     border-top: 195px solid transparent;
     left: -120px;
     top: -95px;
     width: 0;
     height: 0;
 }
-
-/* .shadow {
-    position: absolute;
-    width: 330px;
-    height: 25px;
-    border-radius: 50%;
-    background-color: rgba(0, 0, 0, 0.3);
-    top: 265px;
-    left: -15px;
-    animation: scale 3s linear infinite;
-    z-index: -1;
-} */
 
 @keyframes up {
     0%,
@@ -146,106 +131,5 @@
     }
     50% {
         transform: translateY(-30px);
-    }
-}
-
-@keyframes scale {
-    0%,
-    100% {
-        transform: scaleX(1);
-    }
-    50% {
-        transform: scaleX(0.85);
-    }
-}
-
-.hearts {
-    position: absolute;
-}
-
-.one,
-.two,
-.three,
-.four,
-.five {
-    background-color: red;
-    display: inline-block;
-    height: 10px;
-    margin: 0 10px;
-    position: relative;
-    transform: rotate(-45deg);
-    width: 10px;
-    top: 50px;
-}
-
-.one:before,
-.one:after,
-.two:before,
-.two:after,
-.three:before,
-.three:after,
-.four:before,
-.four:after,
-.five:before,
-.five:after {
-    content: "";
-    background-color: red;
-    border-radius: 50%;
-    height: 10px;
-    position: absolute;
-    width: 10px;
-}
-
-.one:before,
-.two:before,
-.three:before,
-.four:before,
-.five:before {
-    top: -5px;
-    left: 0;
-}
-
-.one:after,
-.two:after,
-.three:after,
-.four:after,
-.five:after {
-    left: 5px;
-    top: 0;
-}
-
-.one {
-    left: 10px;
-    animation: heart 1s ease-out infinite;
-}
-
-.two {
-    left: 30px;
-    animation: heart 2s ease-out infinite;
-}
-
-.three {
-    left: 50px;
-    animation: heart 1.5s ease-out infinite;
-}
-
-.four {
-    left: 70px;
-    animation: heart 2.3s ease-out infinite;
-}
-
-.five {
-    left: 90px;
-    animation: heart 1.7s ease-out infinite;
-}
-
-@keyframes heart {
-    0% {
-        transform: translateY(0) rotate(-45deg) scale(0.3);
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(-150px) rotate(-45deg) scale(1.3);
-        opacity: 0.5;
     }
 }

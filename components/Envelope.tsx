@@ -19,17 +19,14 @@ export default function Envelope() {
           <div className={styles.text}>
             Ini
             <br /> Pengumuman
-            <br /> Seleksi {"<3"}
+            <br /> Seleksi {"?"}
           </div>
-          <div className={styles.heart}></div>
+          <div className={styles.magnifier}>
+            <div className={styles["magnifier-circle"]}></div>
+            <div className={styles["magnifier-handle"]}></div>
+          </div>
         </div>
-        <div className={styles.hearts}>
-          <div className={styles.one}></div>
-          <div className={styles.two}></div>
-          <div className={styles.three}></div>
-          <div className={styles.four}></div>
-          <div className={styles.five}></div>
-        </div>
+        {/* Animasi hearts bisa diubah jadi pin/sidik jari jika ingin sekalian */}
       </div>
       {/* <div className={styles.shadow}></div> */}
     </div>
