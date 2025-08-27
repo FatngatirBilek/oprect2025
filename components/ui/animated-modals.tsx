@@ -98,6 +98,9 @@ export const ModalBody = ({
           className="fixed inset-0 min-h-screen w-full flex items-center justify-center z-50"
           style={{
             background: "transparent",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
           {/* Overlay transparan that DOES NOT block pointer events */}
@@ -108,9 +111,13 @@ export const ModalBody = ({
           <motion.div
             ref={modalRef}
             className={cn(
-              "flex flex-col items-center justify-center w-full h-full px-2 py-4",
+              "flex flex-col items-center justify-center px-2 py-4",
               className,
             )}
+            style={{
+              maxWidth: "100vw",
+              maxHeight: "100vh",
+            }}
             initial={{
               opacity: 0,
               scale: 0.98,
@@ -131,7 +138,7 @@ export const ModalBody = ({
               damping: 15,
             }}
           >
-            <div className="overflow-visible flex-1">{children}</div>
+            <div className="overflow-visible">{children}</div>
           </motion.div>
         </motion.div>
       )}

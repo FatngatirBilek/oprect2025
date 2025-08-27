@@ -1,15 +1,18 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../styles/Envelope.module.css";
 
 export default function Envelope() {
   const [isHovered, setIsHovered] = useState(false);
+
+  // Automatically open the envelope after a delay
+  useEffect(() => {
+    const timer = setTimeout(() => setIsHovered(true), 1000); // 1000ms = 1s
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div
-      className={styles.container}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
+    <div className={styles.container}>
       <div className={styles.valentines}>
         <div className={styles.envelope}></div>
         <div className={styles.front}></div>
@@ -26,7 +29,6 @@ export default function Envelope() {
             <div className={styles["magnifier-handle"]}></div>
           </div>
         </div>
-        {/* Animasi hearts bisa diubah jadi pin/sidik jari jika ingin sekalian */}
       </div>
       {/* <div className={styles.shadow}></div> */}
     </div>
