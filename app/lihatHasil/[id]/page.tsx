@@ -114,22 +114,20 @@ export default function LihatHasilModal() {
           </div>
           {/* PAPER */}
           <div className="paper">
-            <span className="paper-date">Kamis, 27 Maret 2025</span>
+            <span className="paper-date">Rabu, 3 September 2025</span>
             <div>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
-              egestas mollis urna quis bibendum. Nunc porta consequat arcu eu
-              scelerisque. Ut eleifend ipsum ut neque malesuada lobortis. Nulla
-              semper, dolor vitae elementum posuere, nunc neque dictum elit, id
-              iaculis libero tellus sed quam. Vestibulum elementum condimentum
-              felis, id fringilla metus. Fusce lobortis interdum nulla, ut
-              dictum magna pulvinar non. Sed viverra id leo eu viverra. Integer
-              velit dui, facilisis faucibus tellus quis, feugiat bibendum felis.
-              In euismod vestibulum mattis. Integer sed augue pharetra, laoreet
-              odio vel, facilisis leo. Aenean sit amet interdum justo. Integer
-              eget neque a tortor dapibus scelerisque a ut sem. Etiam
-              consectetur nunc vel nunc convallis volutpat. Aliquam id lectus
-              non nunc tempor tempus sed vel mi. Vivamus varius dui in mi
-              convallis ultricies. Praesent dictum leo magna.
+              Setiap dari kalian adalah bintang yang bersinar dengan caranya
+              masing-masing. Hari ini, kami umumkan Calon MPK Satriya Adhijaya
+              yang akan melanjutkan estafet kepemimpinan. Bagi yang terpilih,
+              jadilah pemimpin yang rendah hati dan menginspirasi. Bagi yang
+              belum, ingatlah bahwa nilai kalian tak terukur hanya dari seleksi
+              ini. Teruslah berkarya dan memberikan yang terbaik bagi Satriya
+              Adhijaya. Selamat kepada Calon MPK Satriya Adhijaya terpilih, dan
+              jangan berkecil hati bagi yang belum terpilih!! Teruslah berjuang
+              dan buktikan kemampuanmu. Karena ini bukanlah sebuah kegagalan,
+              tetapi langkah awal menuju Kesuksesan menantimu. Hati kami terbuka
+              untuk semua yang telah berpartisipasi. Teruslah berkarya dengan
+              cinta dan semangat❤️‍🩹❤️‍🩹
             </div>
           </div>
         </div>
@@ -159,6 +157,7 @@ export default function LihatHasilModal() {
     );
   }
 
+  // Only wrap once with ModalProvider (at app root or here)
   return (
     <div className="w-full min-h-screen flex items-center justify-center">
       <ModalProvider>
@@ -176,7 +175,7 @@ export default function LihatHasilModal() {
                 <span role="img" aria-label="detective">
                   🕵️‍♂️
                 </span>{" "}
-                by Fathir
+                by MPK Satriya Adhijaya
               </span>
               <Link
                 href={`/Sertif/${id}`}

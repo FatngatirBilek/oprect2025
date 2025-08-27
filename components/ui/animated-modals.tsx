@@ -37,7 +37,7 @@ export const useModal = (): ModalContextType => {
 };
 
 export function Modal({ children }: { children: ReactNode }) {
-  return <ModalProvider>{children}</ModalProvider>;
+  return <>{children}</>;
 }
 
 export const ModalTrigger = ({
@@ -100,10 +100,10 @@ export const ModalBody = ({
             background: "transparent",
           }}
         >
-          {/* Overlay transparan */}
+          {/* Overlay transparan that DOES NOT block pointer events */}
           <div
             className="fixed inset-0 w-full h-full"
-            style={{ background: "transparent" }}
+            style={{ background: "transparent", pointerEvents: "none" }}
           ></div>
           <motion.div
             ref={modalRef}
