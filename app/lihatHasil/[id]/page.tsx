@@ -116,18 +116,25 @@ export default function LihatHasilModal() {
           <div className="paper">
             <span className="paper-date">Rabu, 3 September 2025</span>
             <div>
-              Setiap dari kalian adalah bintang yang bersinar dengan caranya
-              masing-masing. Hari ini, kami umumkan Calon MPK Satriya Adhijaya
-              yang akan melanjutkan estafet kepemimpinan. Bagi yang terpilih,
-              jadilah pemimpin yang rendah hati dan menginspirasi. Bagi yang
-              belum, ingatlah bahwa nilai kalian tak terukur hanya dari seleksi
-              ini. Teruslah berkarya dan memberikan yang terbaik bagi Satriya
-              Adhijaya. Selamat kepada Calon MPK Satriya Adhijaya terpilih, dan
-              jangan berkecil hati bagi yang belum terpilih!! Teruslah berjuang
-              dan buktikan kemampuanmu. Karena ini bukanlah sebuah kegagalan,
-              tetapi langkah awal menuju Kesuksesan menantimu. Hati kami terbuka
-              untuk semua yang telah berpartisipasi. Teruslah berkarya dengan
-              cinta dan semangat❤️‍🩹❤️‍🩹
+              <p>
+                Hallo <span className="capitalize">{hasil?.nama}</span>👋🏻👋🏻 Apa
+                kabarr?? Terima kasih ya atas kerja keras kalian dalam setiap
+                tahap seleksi yang pastinya tidak semudah ituu. Apapun hasilnya
+                ingat yaa, kalian sudah memberikan yang terbaik, dan setiap dari
+                kalian adalah bintang yang bersinar dengan caranya
+                masing-masing. Hari ini, kami umumkan Calon MPK Satriya Adhijaya
+                yang akan melanjutkan estafet kepemimpinan. Bagi yang terpilih,
+                jadilah pemimpin yang rendah hati dan menginspirasi. Bagi yang
+                belum, ingatlah bahwa kesuksesan kalian yang akan datang tak
+                terukur hanya dari seleksi ini. Teruslah berkarya dan memberikan
+                yang terbaik bagi Satriya Adhijaya. Selamat kepada Calon MPK
+                Satriya Adhijaya terpilih, dan jangan berkecil hati bagi yang
+                belum terpilih!! Teruslah berjuang dan buktikan kemampuanmu.
+                Karena ini bukanlah sebuah kegagalan, tetapi langkah awal menuju
+                Kesuksesan menantimu. Hati kami terbuka untuk semua yang telah
+                berpartisipasi. Teruslah berkarya dengan cinta dan semangat adek
+                adek hebatt, kalian kerenn n proud of u ❤️‍🩹‼️
+              </p>
             </div>
           </div>
         </div>
