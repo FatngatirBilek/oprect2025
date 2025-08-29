@@ -86,59 +86,31 @@ export const ModalBody = ({
     <AnimatePresence>
       {open && (
         <motion.div
-          initial={{
-            opacity: 0,
-          }}
-          animate={{
-            opacity: 1,
-          }}
-          exit={{
-            opacity: 0,
-          }}
-          className="fixed inset-0 min-h-screen w-full flex items-center justify-center z-50"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 flex items-center justify-center"
           style={{
-            background: "transparent",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+            background: "rgba(0,0,0,0.2)", // darken background for modal
           }}
         >
-          {/* Overlay transparan that DOES NOT block pointer events */}
-          <div
-            className="fixed inset-0 w-full h-full"
-            style={{ background: "transparent", pointerEvents: "none" }}
-          ></div>
           <motion.div
             ref={modalRef}
-            className={cn(
-              "flex flex-col items-center justify-center px-2 py-4",
-              className,
-            )}
+            className={cn("flex items-center justify-center")}
             style={{
               maxWidth: "100vw",
               maxHeight: "100vh",
+              width: "100%",
+              height: "100%",
+              overflow: "hidden",
             }}
-            initial={{
-              opacity: 0,
-              scale: 0.98,
-              y: 40,
-            }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-              y: 0,
-            }}
-            exit={{
-              opacity: 0,
-              scale: 0.96,
-            }}
-            transition={{
-              type: "spring",
-              stiffness: 260,
-              damping: 15,
-            }}
+            initial={{ opacity: 0, scale: 0.98, y: 40 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.96 }}
+            transition={{ type: "spring", stiffness: 260, damping: 15 }}
           >
-            <div className="overflow-visible">{children}</div>
+            {/* The children should be your .notepad card */}
+            {children}
           </motion.div>
         </motion.div>
       )}
@@ -153,7 +125,7 @@ export const ModalContent = ({
   children: ReactNode;
   className?: string;
 }) => {
-  return <div className={cn("flex flex-col", className)}>{children}</div>;
+  return <div className={cn("notepad", className)}>{children}</div>;
 };
 
 export const ModalFooter = ({
