@@ -2,12 +2,14 @@ import connect from "@/lib/databaseconnect";
 import Hasil from "@/models/hasil";
 import { NextRequest, NextResponse } from "next/server";
 
+// Helper to extract id from request.nextUrl
+function getIdFromRequest(request: NextRequest) {
+  return request.nextUrl.pathname.split("/").pop();
+}
+
 // GET /api/hasil/[id]
-export async function GET(
-  _: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
-) {
-  const { id } = await params;
+export async function GET(request: NextRequest) {
+  const id = getIdFromRequest(request);
   await connect();
   const hasil = await Hasil.findOne({ _id: id });
   if (!hasil) {
@@ -16,12 +18,9 @@ export async function GET(
   return NextResponse.json({ hasil }, { status: 200 });
 }
 
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
-) {
+export async function PUT(request: NextRequest) {
+  const id = getIdFromRequest(request);
   try {
-    const { id } = await params;
     const {
       newNama: nama,
       newTerima: terima,
@@ -52,13 +51,11 @@ export async function PUT(
 }
 
 // DELETE /api/hasil/[id]
-export async function DELETE(
-  _: NextRequest,
-  { params }: { params: { id: string } },
-) {
+export async function DELETE(request: NextRequest) {
+  const id = getIdFromRequest(request);
   try {
     await connect();
-    await Hasil.findByIdAndDelete(params.id);
+    await Hasil.findByIdAndDelete(id);
     return NextResponse.json({ message: "Berhasil dihapus" }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: "Gagal dihapus" }, { status: 500 });
