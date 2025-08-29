@@ -135,6 +135,7 @@ body {
         #94acd4 36px,
         #94acd4 37px
     );
+    background-attachment: local; /* lines scroll with text */
     font-family: "Shadows Into Light", cursive;
     font-weight: 500;
     color: #242424;
@@ -215,6 +216,7 @@ body {
         font-size: 16px;
         line-height: 30px;
         min-height: 200px;
+        background-attachment: local;
     }
     .notepad-footer {
         font-size: 13px;
