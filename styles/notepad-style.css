@@ -9,13 +9,26 @@ body {
     background: #e6dccd;
 }
 
+/* Modal overlay for full viewport coverage */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    min-width: 100vw;
+}
+
+/* Notepad main container */
 .notepad {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.23);
     border-radius: 18px;
     background: #f8f8f8;
     max-width: 530px;
     width: 100%;
-    margin: 0 auto;
     display: flex;
     flex-direction: column;
     min-height: 600px;
@@ -25,6 +38,7 @@ body {
     position: relative;
 }
 
+/* Notepad header */
 .notepad-header {
     display: flex;
     align-items: center;
@@ -110,6 +124,7 @@ body {
     font-family: inherit;
 }
 
+/* Notepad content area */
 .paper {
     flex: 1 1 0;
     overflow-y: auto;
@@ -144,6 +159,7 @@ body {
     display: block;
 }
 
+/* Notepad footer */
 .notepad-footer {
     width: 100%;
     border-radius: 0 0 18px 18px;
@@ -169,10 +185,10 @@ body {
         width: 97vw;
         min-width: 0;
         border-radius: 18px;
-        min-height: 70vh;
-        height: 85vh;
-        max-height: 94vh;
-        margin: 7vw auto;
+        min-height: 60vh;
+        height: 92vh;
+        max-height: 98vh;
+        margin: 0 auto;
     }
     .notepad-header {
         font-size: 13px;

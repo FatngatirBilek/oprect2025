@@ -102,10 +102,7 @@ export const ModalBody = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center modal-overlay"
-          style={{
-            background: "rgba(0,0,0,0.15)",
-          }}
+          className="modal-overlay"
         >
           <motion.div
             ref={modalRef}
