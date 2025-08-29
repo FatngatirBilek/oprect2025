@@ -8,7 +8,6 @@
 body {
     background: #e6dccd;
 }
-
 .modal-overlay {
     position: fixed;
     inset: 0;
@@ -20,7 +19,6 @@ body {
     min-height: 100vh;
     min-width: 100vw;
 }
-
 .notepad {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.23);
     border-radius: 18px;
@@ -35,7 +33,6 @@ body {
     overflow: hidden;
     position: relative;
 }
-
 .notepad-header {
     display: flex;
     align-items: center;
@@ -56,7 +53,6 @@ body {
     z-index: 2;
     min-width: 0;
 }
-
 .badge-confidential {
     background: none;
     color: #a4251d;
@@ -68,7 +64,6 @@ body {
     min-width: fit-content;
     max-width: 60vw;
 }
-
 .header-icon {
     display: flex;
     align-items: center;
@@ -76,7 +71,6 @@ body {
     margin-right: 3px;
     flex-shrink: 0;
 }
-
 .case-title {
     font-weight: bold;
     color: #333;
@@ -90,7 +84,6 @@ body {
     max-width: 35vw;
     flex-shrink: 1;
 }
-
 .case-name {
     font-size: 15px;
     color: #a4251d;
@@ -105,7 +98,6 @@ body {
     max-width: 14vw;
     flex-shrink: 1;
 }
-
 .notepad .close-button {
     font-size: 22px;
     border: none;
@@ -120,7 +112,6 @@ body {
     z-index: 10;
     font-family: inherit;
 }
-
 .paper {
     flex: 1 1 0;
     overflow-y: auto;
@@ -135,13 +126,10 @@ body {
     text-align: left;
     min-height: 300px;
     background: #f8f8f8;
-    /* no repeating-linear-gradient */
 }
-
 .paper::-webkit-scrollbar {
     display: none;
 }
-
 .paper-date {
     font-family: "Special Elite", "Courier New", monospace;
     font-size: 1.3em;
@@ -150,7 +138,6 @@ body {
     margin-bottom: 10px;
     display: block;
 }
-
 .notepad-footer {
     width: 100%;
     border-radius: 0 0 18px 18px;
@@ -168,7 +155,6 @@ body {
     z-index: 2;
     flex-shrink: 0;
 }
-
 @media (max-width: 600px) {
     .notepad {
         max-width: 390px;

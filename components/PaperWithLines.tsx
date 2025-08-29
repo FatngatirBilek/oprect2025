@@ -19,7 +19,6 @@ export default function PaperWithLines({
   useEffect(() => {
     function updateLines() {
       if (paperRef.current) {
-        // Use scrollHeight for total scrollable area
         const scrollH = paperRef.current.scrollHeight;
         setNumLines(Math.ceil(scrollH / lineHeight) + extraLines);
       }
@@ -37,14 +36,12 @@ export default function PaperWithLines({
       ref={paperRef}
       style={{ position: "relative", background: "#f8f8f8" }}
     >
-      {/* Lines */}
       <div
         style={{
           position: "absolute",
           top: 0,
           left: 0,
           right: 0,
-          bottom: 0,
           pointerEvents: "none",
           zIndex: 0,
           height: "100%",
@@ -65,7 +62,6 @@ export default function PaperWithLines({
           />
         ))}
       </div>
-      {/* Content */}
       <div style={{ position: "relative", zIndex: 1 }}>{children}</div>
     </div>
   );
