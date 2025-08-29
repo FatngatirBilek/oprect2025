@@ -8,6 +8,8 @@
 body {
     background: #e6dccd;
 }
+
+/* Modal overlay for full viewport coverage */
 .modal-overlay {
     position: fixed;
     inset: 0;
@@ -16,9 +18,11 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
+    min-height: 100svh;
     min-width: 100vw;
 }
+
+/* Notepad main container */
 .notepad {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.23);
     border-radius: 18px;
@@ -27,12 +31,14 @@ body {
     width: 100%;
     display: flex;
     flex-direction: column;
-    min-height: 600px;
-    height: 80vh;
-    max-height: 900px;
+    min-height: 60svh; /* reduce min-height for mobile and use svh */
+    height: 80svh; /* replaces 80vh for Android/iOS fix */
+    max-height: 100svh; /* key change: ensures no overflow! */
     overflow: hidden;
     position: relative;
 }
+
+/* Notepad header */
 .notepad-header {
     display: flex;
     align-items: center;
@@ -53,6 +59,7 @@ body {
     z-index: 2;
     min-width: 0;
 }
+
 .badge-confidential {
     background: none;
     color: #a4251d;
@@ -64,6 +71,7 @@ body {
     min-width: fit-content;
     max-width: 60vw;
 }
+
 .header-icon {
     display: flex;
     align-items: center;
@@ -71,6 +79,7 @@ body {
     margin-right: 3px;
     flex-shrink: 0;
 }
+
 .case-title {
     font-weight: bold;
     color: #333;
@@ -84,6 +93,7 @@ body {
     max-width: 35vw;
     flex-shrink: 1;
 }
+
 .case-name {
     font-size: 15px;
     color: #a4251d;
@@ -98,6 +108,7 @@ body {
     max-width: 14vw;
     flex-shrink: 1;
 }
+
 .notepad .close-button {
     font-size: 22px;
     border: none;
@@ -112,6 +123,8 @@ body {
     z-index: 10;
     font-family: inherit;
 }
+
+/* Notepad content area */
 .paper {
     flex: 1 1 0;
     overflow-y: auto;
@@ -127,9 +140,11 @@ body {
     min-height: 300px;
     background: #f8f8f8;
 }
+
 .paper::-webkit-scrollbar {
     display: none;
 }
+
 .paper-date {
     font-family: "Special Elite", "Courier New", monospace;
     font-size: 1.3em;
@@ -138,6 +153,8 @@ body {
     margin-bottom: 10px;
     display: block;
 }
+
+/* Notepad footer */
 .notepad-footer {
     width: 100%;
     border-radius: 0 0 18px 18px;
@@ -155,15 +172,16 @@ body {
     z-index: 2;
     flex-shrink: 0;
 }
+
 @media (max-width: 600px) {
     .notepad {
         max-width: 390px;
         width: 97vw;
         min-width: 0;
         border-radius: 18px;
-        min-height: 60vh;
-        height: 92vh;
-        max-height: 98vh;
+        min-height: 40svh; /* use svh for mobile */
+        height: 92svh; /* use svh instead of vh */
+        max-height: 100svh;
         margin: 0 auto;
     }
     .notepad-header {
