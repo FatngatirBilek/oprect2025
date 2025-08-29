@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import Envelope from "@/components/Envelope";
+import PaperWithLines from "@/components/PaperWithLines";
 import {
   Modal,
   ModalBody,
@@ -14,6 +15,11 @@ import {
 } from "@/components/ui/animated-modals";
 import "@/styles/notepad-style.css";
 
+function isMobileDevice() {
+  if (typeof window === "undefined") return false;
+  return window.innerWidth <= 600;
+}
+
 export default function LihatHasilModal() {
   const { id } = useParams<{ id: string }>();
 
@@ -22,8 +28,10 @@ export default function LihatHasilModal() {
   );
   const [notFound, setNotFound] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    setIsMobile(isMobileDevice());
     let mounted = true;
     async function fetchNama() {
       setLoading(true);
@@ -127,7 +135,10 @@ export default function LihatHasilModal() {
                       &times;
                     </button>
                   </div>
-                  <div className="paper">
+                  <PaperWithLines
+                    lineHeight={isMobile ? 30 : 36}
+                    extraLines={2}
+                  >
                     <span className="paper-date">Rabu, 3 September 2025</span>
                     <div>
                       <p>
@@ -153,7 +164,7 @@ export default function LihatHasilModal() {
                         kerenn n proud of u ❤️‍🩹‼️
                       </p>
                     </div>
-                  </div>
+                  </PaperWithLines>
                   <div className="notepad-footer">
                     <span>
                       Made with{" "}
