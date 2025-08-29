@@ -1,12 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-
-interface HasilData {
-  imageURL: string;
-  nama: string;
-  terima: boolean;
-}
+import Image from "next/image";
 
 export default function HasilImagePage() {
   const { id } = useParams<{ id: string }>();
@@ -39,41 +34,31 @@ export default function HasilImagePage() {
     if (id) fetchImage();
   }, [id]);
 
-  if (loading) return <div style={{ textAlign: "center" }}>Memuat...</div>;
-  if (error)
-    return <div style={{ color: "red", textAlign: "center" }}>{error}</div>;
+  if (loading) return <div className="text-center">Memuat...</div>;
+  if (error) return <div className="text-center text-red-500">{error}</div>;
   if (!imageURL)
-    return <div style={{ textAlign: "center" }}>Gambar tidak ditemukan.</div>;
+    return <div className="text-center">Gambar tidak ditemukan.</div>;
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        marginTop: 30,
-      }}
-    >
+    <div className="flex flex-col items-center min-h-screen bg-[#f8ecd3] pt-8">
       {terima === false ? (
-        <h2 style={{ color: "red", fontWeight: 700, marginBottom: 12 }}>
+        <h2 className="text-red-600 font-bold mb-3 text-lg md:text-xl">
           Maaf Kamu Belum Diterima
         </h2>
       ) : terima === true ? (
-        <h2 style={{ color: "green", fontWeight: 700, marginBottom: 12 }}>
+        <h2 className="text-green-600 font-bold mb-3 text-lg md:text-xl">
           Selamat Kamu Diterima
         </h2>
       ) : null}
       <img
         src={imageURL}
         alt={nama ?? "Hasil"}
-        style={{
-          maxWidth: "90vw",
-          maxHeight: "80vh",
-          borderRadius: 12,
-          marginTop: 24,
-          objectFit: "contain",
-        }}
+        className="max-w-[98vw] max-h-[70vh] rounded-xl mt-6 mb-0 object-contain block"
+        style={{ marginBottom: 0, border: 0, padding: 0 }}
       />
+      <div className="self-start -mt-4 ml-2">
+        <Image src="/maskot.svg" alt="maskot" width={220} height={120} />
+      </div>
     </div>
   );
 }
