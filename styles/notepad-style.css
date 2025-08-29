@@ -1,30 +1,36 @@
 @import url("https://fonts.googleapis.com/css2?family=Special+Elite&display=swap");
 @font-face {
     font-family: "Shadows Into Light";
-    src: url(https://fonts.gstatic.com/s/shadowsintolight/v15/UqyNK9UOIntux_czAvDQx_ZcHqZXBNQzdcD5.woff2)
+    src: url("https://fonts.gstatic.com/s/shadowsintolight/v15/UqyNK9UOIntux_czAvDQx_ZcHqZXBNQzdcD5.woff2")
         format("woff2");
+}
+
+body {
+    background: #e6dccd;
 }
 
 .notepad {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.23);
     border-radius: 18px;
-    overflow: hidden;
-    position: relative;
     background: #f8f8f8;
     max-width: 530px;
     width: 100%;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    height: 80vh; /* card fills 80% of viewport height */
-    min-height: 400px;
+    min-height: 600px;
+    height: 80vh;
+    max-height: 900px;
+    overflow: hidden;
+    position: relative;
 }
 
 .notepad-header {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 8px;
     background: #f8ad9d;
-    padding: 0 18px;
+    padding: 0 14px;
     border-bottom: 2px dashed #d9c7b2;
     font-family: "Special Elite", "Courier New", monospace;
     font-size: 20px;
@@ -32,27 +38,61 @@
     height: 53px;
     min-height: 53px;
     letter-spacing: 1px;
-    position: relative;
+    position: sticky;
+    top: 0;
     border-top-left-radius: 18px;
     border-top-right-radius: 18px;
-    flex-shrink: 0;
     z-index: 2;
+    min-width: 0;
 }
 
 .badge-confidential {
     background: none;
     color: #a4251d;
-    padding: 0;
     font-size: 19px;
     font-weight: bold;
     letter-spacing: 2px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    min-width: fit-content;
+    max-width: 60vw;
+}
+
+.header-icon {
+    display: flex;
+    align-items: center;
+    margin-left: 3px;
+    margin-right: 3px;
+    flex-shrink: 0;
 }
 
 .case-title {
     font-weight: bold;
     color: #333;
-    margin-left: 6px;
     font-size: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-flex;
+    align-items: center;
+    min-width: 0;
+    max-width: 35vw;
+    flex-shrink: 1;
+}
+
+.case-name {
+    font-size: 15px;
+    color: #a4251d;
+    margin-left: 5px;
+    word-break: break-all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline;
+    vertical-align: middle;
+    min-width: 0;
+    max-width: 14vw;
+    flex-shrink: 1;
 }
 
 .notepad .close-button {
@@ -70,30 +110,28 @@
     font-family: inherit;
 }
 
-.notepad .paper {
-    width: 100%;
-    flex: 1;
+.paper {
+    flex: 1 1 0;
     overflow-y: auto;
-    padding: 24px 26px 38px 26px;
+    padding: 36px 26px 38px 26px;
     background: repeating-linear-gradient(
         #f8f8f8,
-        #f8f8f8 31px,
-        #94acd4 31px,
-        #94acd4 32px
+        #f8f8f8 36px,
+        #94acd4 36px,
+        #94acd4 37px
     );
     font-family: "Shadows Into Light", cursive;
     font-weight: 500;
     color: #242424;
-    line-height: 32px;
-    outline: 0;
+    line-height: 36px;
     font-size: 22px;
     border-bottom-left-radius: 18px;
     border-bottom-right-radius: 18px;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    text-align: left;
+    min-height: 300px;
 }
 
-.notepad .paper::-webkit-scrollbar {
+.paper::-webkit-scrollbar {
     display: none;
 }
 
@@ -118,45 +156,53 @@
     align-items: center;
     border-top: 1px solid #eee;
     box-sizing: border-box;
-    flex-shrink: 0;
+    position: sticky;
+    bottom: 0;
     z-index: 2;
+    flex-shrink: 0;
 }
 
 /* Responsive for mobile */
 @media (max-width: 600px) {
     .notepad {
-        max-width: 98vw;
-        width: 98vw;
+        max-width: 390px;
+        width: 97vw;
         min-width: 0;
         border-radius: 18px;
-        height: 98vh;
-        min-height: 0;
-    }
-    .notepad-header,
-    .notepad-footer {
-        font-size: 16px;
-        padding: 0 9px;
-        height: 44px;
-        min-height: 44px;
-        border-radius: 0;
+        min-height: 70vh;
+        height: 85vh;
+        max-height: 94vh;
+        margin: 7vw auto;
     }
     .notepad-header {
-        border-top-left-radius: 18px;
-        border-top-right-radius: 18px;
+        font-size: 13px;
+        padding: 0 7px;
+        height: 44px;
+        min-height: 44px;
+        gap: 4px;
     }
-    .notepad .paper {
-        padding: 20px 7px 22px 7px;
-        font-size: 17px;
-        font-weight: 600;
-        color: #191919;
-        border-bottom-left-radius: 18px;
-        border-bottom-right-radius: 18px;
+    .badge-confidential {
+        font-size: 13px;
+        max-width: 70vw;
+        min-width: fit-content;
+    }
+    .case-title {
+        font-size: 11px;
+        max-width: 28vw;
+    }
+    .case-name {
+        font-size: 11px;
+        max-width: 13vw;
+    }
+    .paper {
+        padding: 29px 7px 20px 7px;
+        font-size: 16px;
+        line-height: 30px;
+        min-height: 200px;
     }
     .notepad-footer {
-        font-size: 15px;
+        font-size: 13px;
         padding: 8px 7px;
-        border-bottom-left-radius: 18px;
-        border-bottom-right-radius: 18px;
     }
     .paper-date {
         font-size: 1.1em;

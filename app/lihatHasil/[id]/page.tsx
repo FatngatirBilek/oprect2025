@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { FlipWords } from "@/components/ui/flip-words";
+import Envelope from "@/components/Envelope";
 import {
   Modal,
   ModalBody,
@@ -12,7 +12,6 @@ import {
   useModal,
   ModalProvider,
 } from "@/components/ui/animated-modals";
-import Envelope from "@/components/Envelope";
 import "@/styles/notepad-style.css";
 
 export default function LihatHasilModal() {
@@ -59,9 +58,6 @@ export default function LihatHasilModal() {
     };
   }, [id]);
 
-  const words = [hasil?.nama || ""];
-
-  // Only wrap once with ModalProvider (at app root or here)
   return (
     <div className="w-full min-h-screen flex items-center justify-center">
       <ModalProvider>
@@ -90,17 +86,10 @@ export default function LihatHasilModal() {
                   </span>
                 </div>
               ) : (
-                <>
+                <div className="notepad">
                   <div className="notepad-header">
                     <span className="badge-confidential">CONFIDENTIAL</span>
-                    <span
-                      style={{
-                        display: "inline-block",
-                        marginLeft: 6,
-                        marginRight: 7,
-                      }}
-                    >
-                      {/* Magnifier SVG */}
+                    <span className="header-icon">
                       <svg
                         width="20"
                         height="20"
@@ -127,10 +116,8 @@ export default function LihatHasilModal() {
                       </svg>
                     </span>
                     <span className="case-title">
-                      Case File:{" "}
-                      <span style={{ color: "#a4251d", marginLeft: "3px" }}>
-                        <FlipWords className="capitalize" words={words} />
-                      </span>
+                      Case File:
+                      <span className="case-name">{hasil?.nama}</span>
                     </span>
                     <button
                       className="close-button"
@@ -167,7 +154,7 @@ export default function LihatHasilModal() {
                       </p>
                     </div>
                   </div>
-                  <ModalFooter>
+                  <div className="notepad-footer">
                     <span>
                       Made with{" "}
                       <span role="img" aria-label="detective">
@@ -183,8 +170,8 @@ export default function LihatHasilModal() {
                     >
                       Lihat Hasil
                     </Link>
-                  </ModalFooter>
-                </>
+                  </div>
+                </div>
               )}
             </ModalContent>
           </ModalBody>

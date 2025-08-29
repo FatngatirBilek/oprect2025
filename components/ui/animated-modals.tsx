@@ -55,6 +55,7 @@ export const ModalTrigger = ({
         className,
       )}
       onClick={() => setOpen(true)}
+      type="button"
     >
       {children}
     </button>
@@ -68,19 +69,31 @@ export const ModalBody = ({
   children: ReactNode;
   className?: string;
 }) => {
-  const { open } = useModal();
+  const { open, setOpen } = useModal();
 
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = "";
     }
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [open]);
 
+  // Close on Escape key
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [open, setOpen]);
+
   const modalRef = useRef<HTMLDivElement | null>(null);
-  const { setOpen } = useModal();
-  useOutsideClick(modalRef, () => setOpen(false));
+  useOutsideClick(modalRef, () => open && setOpen(false));
 
   return (
     <AnimatePresence>
@@ -89,27 +102,24 @@ export const ModalBody = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center"
+          className="fixed inset-0 z-50 flex items-center justify-center modal-overlay"
           style={{
-            background: "rgba(0,0,0,0.2)", // darken background for modal
+            background: "rgba(0,0,0,0.15)",
           }}
         >
           <motion.div
             ref={modalRef}
-            className={cn("flex items-center justify-center")}
+            className={cn("flex items-center justify-center w-full h-full")}
             style={{
               maxWidth: "100vw",
               maxHeight: "100vh",
-              width: "100%",
-              height: "100%",
-              overflow: "hidden",
+              pointerEvents: "auto",
             }}
             initial={{ opacity: 0, scale: 0.98, y: 40 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96 }}
             transition={{ type: "spring", stiffness: 260, damping: 15 }}
           >
-            {/* The children should be your .notepad card */}
             {children}
           </motion.div>
         </motion.div>
@@ -125,7 +135,11 @@ export const ModalContent = ({
   children: ReactNode;
   className?: string;
 }) => {
-  return <div className={cn("notepad", className)}>{children}</div>;
+  return (
+    <div className={cn("notepad", className)} tabIndex={-1}>
+      {children}
+    </div>
+  );
 };
 
 export const ModalFooter = ({
