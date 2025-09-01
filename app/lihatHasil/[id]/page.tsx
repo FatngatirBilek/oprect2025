@@ -134,13 +134,13 @@ function LihatHasilModalContent({ id }: { id: string }) {
                 </button>
               </div>
               <PaperWithLines lineHeight={isMobile ? 30 : 36} extraLines={2}>
-                <span className="paper-date">Rabu, 3 September 2025</span>
+                <span className="paper-date">Selasa, 2 September 2025</span>
                 <div>
                   <p>
                     Hallo <span className="capitalize">{hasil?.nama}</span>👋🏻👋🏻
-                    Apa kabarr?? Terima kasih ya atas kerja keras kalian dalam
+                    Apa kabarr?? Terima kasih ya atas kerja keras kamu dalam
                     setiap tahap seleksi yang pastinya tidak semudah ituu.
-                    Apapun hasilnya ingat yaa, kalian sudah memberikan yang
+                    Apapun hasilnya ingat yaa, kamu sudah memberikan yang
                     terbaik, dan setiap dari kalian adalah bintang yang bersinar
                     dengan caranya masing-masing. Hari ini, kami umumkan Calon
                     MPK Satriya Adhijaya yang akan melanjutkan estafet
