@@ -57,7 +57,7 @@ export default function HasilImagePage() {
         style={{ marginBottom: 0, border: 0, padding: 0 }}
       />
       <div className="self-start -mt-4 ml-2">
-        <Image src="/maskot.svg" alt="maskot" width={270} height={300} />
+        <Image src="/maskot.png" alt="maskot" width={270} height={300} />
       </div>
     </div>
   );
